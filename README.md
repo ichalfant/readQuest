@@ -31,7 +31,6 @@ readQuest/
 |  |--cover_images/
 |  |--css/
 |  |--js/
-|  |--uploads/
 |--templates/
 |--app.py
 |--database.py
