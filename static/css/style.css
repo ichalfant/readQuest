@@ -1,0 +1,244 @@
+/* General Styling for the header */
+header {
+    background-color: #413c58;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Navigation Bar */
+.site-title h1 {
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
+    font-size: 3rem;
+    color: white;
+}
+
+.navbar {
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.navbar-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.navbar-nav li {
+    margin: 0 15px;
+}
+
+.navbar-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.navbar-nav a:hover {
+    background-color: rgb(96, 91, 118);
+    border-radius: 5px;
+}
+
+/* General body styling */
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+main {
+    margin: 25px;
+    padding: 10px;
+    background-color: rgb(231, 239, 197);
+}
+
+/* Main heading style */
+h1 {
+    font-weight: bold;
+    text-align: left;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* Subheading style */
+h2 {
+    text-align: center;
+    color: #495057;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    background-color: #EF5B5B;
+}
+
+/* Link styling */
+.edit-book {
+    color: #413c58;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.edit-book:hover {
+    text-decoration: underline;
+}
+
+/* Message styling when there are no books */
+p {
+    text-align: center;
+    color: #6c757d;
+}
+
+/* Modal styles */
+.modal-content {
+    border-radius: 5px;
+}
+
+.modal-header {
+    background-color: rgb(163, 196, 188);
+    color: white;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Button styles */
+.btn {
+    border-radius: 5px;
+}
+
+/* Customize primary button */
+.btn-primary {
+    background-color: #413c58;
+    border-color: #413c58;
+}
+
+.btn-danger {
+    background-color: #EF5B5B;
+    border-color: #EF5B5B;
+}
+
+/* Index books */
+.book-preview {
+    display: flex;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.539);
+}
+
+.book-item {
+    width: 25vw;
+    height: auto;
+    margin: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.book-info-short {
+    text-align: center;
+}
+
+.book-cover {
+    box-sizing: border-box;
+}
+
+.book-cover img {
+    width: 15vw;
+    height: auto;
+    padding: 10px;
+    object-fit: contain;
+    box-sizing: border-box;
+}
+
+.book-title {
+    font-weight: bolder;
+    color: black;
+}
+
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-page header, .signup-page header {
+    background-color: transparent;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.login-page h1, .signup-page h1 {
+    text-align: center;
+}
+
+.login-page main, .signup-page main {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-page form, .signup-page form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-page label, .signup-page label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login-page input[type="text"], .login-page input[type="password"],
+.signup-page input[type="text"], .signup-page input[type="password"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.login-page input[type="text"]:focus, .login-page input[type="password"]:focus,
+.signup-page input[type="text"]:focus, .signup-page input[type="password"]:focus {
+    border-color: rgb(163, 196, 188);
+    outline: none;
+}
+
+.login-page button, .signup-page button {
+    padding: 10px;
+    background-color: rgb(163, 196, 188);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-page button:hover, .signup-page button:hover {
+    background-color: #0056b3;
+}
+
+.login-page p, .signup-page p {
+    text-align: center;
+}
+
+.signup-button, .login-button {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-button:hover, .login-button:hover {
+    text-decoration: underline;
+}
