@@ -23,3 +23,15 @@ The Reading Tracker is a Flask-based web application that allows users to manage
 - **Backend**: Flask (Python)
 - **Database**: SQLite
 - **Frontend**: HTML, CSS, JavaScript (for interactive elements)
+
+## File Structure
+readQuest/
+|--static/
+|  |--cover_images/
+|  |--css/
+|  |--js/
+|  |--uploads/
+|--templates/
+|--app.py
+|--database.py
+|--requirements.txt
