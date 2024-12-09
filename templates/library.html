@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Library{% endblock %}
+
+{% block content %}
+    <h1>{{ username }}'s Library</h1>
+
+    <h2>Books in Progress</h2>
+    <div class="book-preview">
+        {% for book in books_in_progress %}
+            <div class="book-item">
+
+                <p class="book-title">{{ book.title }} by {{ book.author }}</p>
+
+                <div class="book-cover">
+                    {% if book.cover_image_path %}
+                        <img src="{{ url_for('static', filename=book.cover_image_path) }}" alt="{{ book.title }} cover">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='cover_images/default_cover.jpg') }}" alt="No Cover">
+                    {% endif %}
+                </div>
+
+                <p>Format: {{ book.format }}</p>
+
+                {% if book.status == 'completed' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.end_date %}
+                        <p>End Date: {{ book.end_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>End Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'in progress' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'dropped' %}
+
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.drop_date %}
+                        <p>Drop Date: {{ book.drop_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Drop Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'to read' %}
+                    {% if book.added_to_read_date %}
+                        <p>Added To Read Date: {{ book.added_to_read_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Added To Read Date: unknown</p>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-primary see-more" href="{{ url_for('see_more', status='in progress') }}">See More In-Progress</a>
+    </div>
+    
+
+    <h2>Recently Read Books</h2>
+    <div class="book-preview">
+        {% for book in books_completed %}
+            <div class="book-item">
+
+                <p class="book-title">{{ book.title }} by {{ book.author }}</p>
+
+                <div class="book-cover">
+                    {% if book.cover_image_path %}
+                        <img src="{{ url_for('static', filename=book.cover_image_path) }}" alt="{{ book.title }} cover">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='cover_images/default_cover.jpg') }}" alt="No Cover">
+                    {% endif %}
+                </div>
+
+                <p>Format: {{ book.format }}</p>
+
+                {% if book.status == 'completed' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.end_date %}
+                        <p>End Date: {{ book.end_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>End Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'in progress' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'dropped' %}
+
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.drop_date %}
+                        <p>Drop Date: {{ book.drop_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Drop Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'to read' %}
+                    {% if book.added_to_read_date %}
+                        <p>Added To Read Date: {{ book.added_to_read_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Added To Read Date: unknown</p>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-primary see-more" href="{{ url_for('see_more', status='completed') }}">See More Completed</a>
+    </div>
+    
+
+    <h2>To Read Books</h2>
+    <div class="book-preview">
+        {% for book in books_to_read %}
+            <div class="book-item">
+
+                <p class="book-title">{{ book.title }} by {{ book.author }}</p>
+
+                <div class="book-cover">
+                    {% if book.cover_image_path %}
+                        <img src="{{ url_for('static', filename=book.cover_image_path) }}" alt="{{ book.title }} cover">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='cover_images/default_cover.jpg') }}" alt="No Cover">
+                    {% endif %}
+                </div>
+
+                <p>Format: {{ book.format }}</p>
+
+                {% if book.status == 'completed' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.end_date %}
+                        <p>End Date: {{ book.end_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>End Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'in progress' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'dropped' %}
+
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.drop_date %}
+                        <p>Drop Date: {{ book.drop_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Drop Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'to read' %}
+                    {% if book.added_to_read_date %}
+                        <p>Added To Read Date: {{ book.added_to_read_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Added To Read Date: unknown</p>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+    <div class="text-center">
+        <a class="btn btn-primary see-more" href="{{ url_for('see_more', status='to read') }}">See More To-Read</a>
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-primary see-more" href="{{ url_for('see_more', status='dropped') }}">See More Dropped</a>
+    </div>
+    
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/see_more.js') }}"></script>
+{% endblock %}

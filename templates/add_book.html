@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+    <h1>Add a New Book</h1>
+
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashed-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <br><br>
+        
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required>
+        <br><br>
+        
+        <label for="format">Format:</label>
+        <select id="format" name="format" required>
+            <option value="paperback">Paperback</option>
+            <option value="hardcover">Hardcover</option>
+            <option value="e-book">E-Book</option>
+            <option value="audiobook">Audiobook</option>
+        </select>
+        <br><br>
+        
+        <label for="status">Status:</label>
+        <select id="status" name="status" onchange="toggleDateFields()">
+            <option value="to read">To Read</option>
+            <option value="in progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="dropped">Dropped</option>
+        </select>
+        <br><br>
+
+        <div id="date-fields"></div>
+
+        <label for="coverImage">Cover Image:</label>
+        <input type="file" id="coverImage" name="cover_image" accepts="image/*">
+        <br><br>
+        
+        <button type="submit">Add Book</button>
+    </form>
+    <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        // Function to dynamically show date fields based on selected status
+        function toggleDateFields() {
+            const status = document.getElementById('status').value;
+            const dateFieldsContainer = document.getElementById('date-fields');
+            
+            // Clear any existing date fields
+            dateFieldsContainer.innerHTML = '';
+
+            // Show specific date fields based on the selected status
+            if (status === 'in progress') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date">
+                `;
+            } else if (status === 'completed') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date">
+
+                    <label for="end_date">End Date</label>
+                    <input type="date" name="end_date" id="end_date">
+                `;
+            } else if (status === 'dropped') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date">
+                    
+                    <label for="drop_date">Drop Date</label>
+                    <input type="date" name="drop_date" id="drop_date">
+                `;
+            } else if (status === 'to read') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="added_to_read_date">Added to Read Date</label>
+                    <input type="date" name="added_to_read_date" id="added_to_read_date">
+                `;
+            }
+        }
+
+        // Initialize the date fields on page load based on the default status
+        window.onload = function() {
+            toggleDateFields();
+        }
+    </script>
+{% endblock %}

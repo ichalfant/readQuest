@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1>Welcome, {{ username }}!</h1>
+
+    <h2>Your Books in Progress</h2>
+    {% if reading_instances_in_progress %}
+        <div class="book-preview">
+            {% for book in reading_instances_in_progress %}
+                <div class="book-item">
+
+                    <div class="book-info-short">
+                        <a href="{{ url_for('update_reading_instance', reading_instance_id = book.reading_instance_id)}}" class="edit-book">
+                            {{ book.title }}
+                        </a>
+                        <p>by {{ book.author }}</p>
+                    </div>
+
+                    <div class="book-cover">
+                        {% if book.cover_image_path %}
+                            <img src="{{ url_for('static', filename=book.cover_image_path)}}" alt="{{ book.title }} cover">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='cover_images/default_cover.jpg') }}" alt="No Cover">
+                        {% endif %}
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have no books in progress.</p>
+    {% endif %}
+    <p>All books can be found in your library.</p>
+
+    <!-- Goal container where the JavaScript will insert the goal display/form -->
+    <div id="goal-container"></div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

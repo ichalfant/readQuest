@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}See More - {{ status }}{% endblock %}
+
+{% block content %}
+    <h1>Books: {{status | capitalize }}</h1>
+
+    <div id="booksContainer" class="books-container">
+        {% for book in books %}
+        <div class="book-item">
+
+            <div class="book-cover">
+                {% if book.cover_image_path %}
+                    <img src="{{ url_for('static', filename=book.cover_image_path) }}" alt="{{ book.title }} cover">
+                {% else %}
+                    <img src="{{ url_for('static', filename='cover_images/default_cover.jpg') }}" alt="No Cover">
+                {% endif %}
+            </div>
+
+            <div class="book-info-short">
+                <a href="{{ url_for('update_reading_instance', reading_instance_id = book.reading_instance_id)}}" class="edit-book">
+                    {{ book.title }}
+                </a>
+
+                <p>by {{ book.author }}</p>
+            </div>
+            
+
+            <p>Format: {{ book.format }}</p>
+
+            {% if book.status == 'completed' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.end_date %}
+                        <p>End Date: {{ book.end_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>End Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'in progress' %}
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'dropped' %}
+
+                    {% if book.start_date %}
+                        <p>Start Date: {{ book.start_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Start Date: unknown</p>
+                    {% endif %}
+                    {% if book.drop_date %}
+                        <p>Drop Date: {{ book.drop_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Drop Date: unknown</p>
+                    {% endif %}
+
+                {% elif book.status == 'to read' %}
+                    {% if book.added_to_read_date %}
+                        <p>Added To Read Date: {{ book.added_to_read_date.strftime('%b %d, %Y') }}</p>
+                    {% else %}
+                        <p>Added To Read Date: unknown</p>
+                    {% endif %}
+                {% endif %}
+
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if total_books > per_page %}
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('see_more', status=status, page=page-1) }}" class="btn btn-secondary">Previous</a>
+        {% endif %}
+        {% for p in range(1, (total_books // per_page) + 2) %}
+            {% if p == page %}
+                <span class="current-page">{{ p }}</span>
+            {% else %}
+                <a href="{{ url_for('see_more', status=status, page=p) }}" class="btn btn-outline-primary">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if total_books > page * per_page %}
+            <a href="{{ url_for('see_more', status=status, page=page + 1) }}" class="btn btn-secondary">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

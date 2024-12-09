@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ReadQuest{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <header>
+        <div class="site-title">
+            <h1>ReadQuest</h1>
+        </div>
+        <nav class="navbar">
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('library') }}">Library</a></li>
+                <li><a href="{{ url_for('add_book') }}">Add Book</a></li>
+                <li><a href="{{ url_for('statistics') }}">Statistics</a></li>
+                {% if 'user' in session %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Website. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

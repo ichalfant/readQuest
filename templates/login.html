@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+    <header>
+        <h1>Login to ReadQuest</h1>
+    </header>
+
+    <main>
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br><br>
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="{{ url_for('signup') }}" class="signup-button">Sign up here</a></p>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>

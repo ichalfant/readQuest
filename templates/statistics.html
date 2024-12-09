@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block content %}
+
+    <h1>Reading Statistics</h1>
+    <form method="POST" action="{{ url_for('statistics') }}">
+        <div>
+            <label for="year">Select Year:</label>
+            <select name="year" id="year" required>
+                <option value="" disabled selected>Select a year</option>
+                {% for year in years %}
+                    <option value="{{ year.year }}" {% if selected_year and (year.year | int) == (selected_year | int) %}selected{% endif %}>
+                        {{ year.year }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="month">Select Month:</label>
+            <select name="month" id="month" required>
+                <option value="" disabled selected>Select a month</option>
+                {% for month, month_name in months %}
+                    <option value="{{ month }}" {% if selected_month and (month | int) == selected_month %}selected{% endif %}>
+                        {{ month_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    {% if selected_year and selected_month %}
+        <h2>Statistics for {{ months[selected_month|int - 1][1] }} {{ selected_year }}</h2>
+        <ul>
+            <li><strong>Books Completed:</strong> {{completed_books}}</li>
+            <li><strong>Average Time to Finish a Book (days):</strong> {{ avg_time_to_finish }}</li>
+            <li><strong>Books Added to "To Read" Status:</strong> {{ to_read_books }}</li>
+            <li><strong>Books Added to "Dropped" Status:</strong> {{ dropped_books }}</li>
+        </ul>
+    {% else %}
+        <p>Select a year and month to view statistics.</p>
+    {% endif %}
+{% endblock %}

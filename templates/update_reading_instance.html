@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Update Reading Instance{% endblock %}
+
+{% block content %}
+    <h1>Update Reading Instance</h1>
+
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashed-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('update_reading_instance', reading_instance_id=read_instance.id) }}" enctype="multipart/form-data"> 
+        <label for="format">Format:</label>
+        <select id="format" name="format" required>
+            <option value="paperback" {% if read_instance.format == 'paperback' %}selected{% endif %}>Paperback</option>
+            <option value="hardcover" {% if read_instance.format == 'hardcover' %}selected{% endif %}>Hardcover</option>
+            <option value="e-book" {% if read_instance.format == 'e-book' %}selected{% endif %}>E-Book</option>
+            <option value="audiobook" {% if read_instance.format == 'audiobook' %}selected{% endif %}>Audiobook</option>
+        </select>
+        <br><br>
+        
+        <label for="status">Status:</label>
+        <select id="status" name="status" onchange="toggleDateFields()">
+            <option value="to read" {% if read_instance.status == 'to read' %}selected{% endif %}>To Read</option>
+            <option value="in progress" {% if read_instance.status == 'in progress' %}selected{% endif %}>In Progress</option>
+            <option value="completed" {% if read_instance.status == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="dropped" {% if read_instance.status == 'dropped' %}selected{% endif %}>Dropped</option>
+        </select>
+        <br><br>
+
+        <div id="date-fields"></div>
+        
+        <button type="submit">Update Reading Instance</button>
+    </form>
+    
+    <!-- Delete Button -->
+    <form method="POST" action="{{ url_for('delete_reading_instance', reading_instance_id=read_instance.id) }}" style="display:inline;">
+        <button type="submit" style="color: red; background-color: white; border: 1px solid red;">Delete Book</button>
+    </form>
+
+    <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        // Function to dynamically show date fields based on selected status
+        function toggleDateFields() {
+            const status = document.getElementById('status').value;
+            const dateFieldsContainer = document.getElementById('date-fields');
+
+            const startDate = "{{ read_instance.start_date.strftime('%Y-%m-%d') if read_instance.start_date else '' }}";
+            const endDate = "{{ read_instance.end_date.strftime('%Y-%m-%d') if read_instance.end_date else '' }}";
+            const dropDate = "{{ read_instance.drop_date.strftime('%Y-%m-%d') if read_instance.drop_date else '' }}";
+            const addedToReadDate = "{{ read_instance.added_to_read_date.strftime('%Y-%m-%d') if read_instance.added_to_read_date else '' }}";
+            
+            // Clear any existing date fields
+            dateFieldsContainer.innerHTML = '';
+
+            // Show specific date fields based on the selected status
+            if (status === 'in progress') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date" value="${startDate}">
+                `;
+            } else if (status === 'completed') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date" value="${startDate}">
+
+                    <label for="end_date">End Date</label>
+                    <input type="date" name="end_date" id="end_date" value="${endDate}">
+                `;
+            } else if (status === 'dropped') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date" value="${startDate}">
+                    
+                    <label for="drop_date">Drop Date</label>
+                    <input type="date" name="drop_date" id="drop_date" value="${dropDate}">
+                `;
+            } else if (status === 'to read') {
+                dateFieldsContainer.innerHTML = `
+                    <label for="added_to_read_date">Added to Read Date</label>
+                    <input type="date" name="added_to_read_date" id="added_to_read_date" value="${addedToReadDate}">
+                `;
+            }
+        }
+
+        // Initialize the date fields on page load based on the default status
+        window.onload = function() {
+            toggleDateFields();
+        }
+    </script>
+{% endblock %}
