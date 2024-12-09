@@ -36,3 +36,10 @@ readQuest/
 |--app.py
 |--database.py
 |--requirements.txt
+```
+## Database Schema
+- **User**: (**id**, username, password_hash, created_at)
+- **Book**: (**id**, title, author, cover_image_path, date_added, uploaded_by)
+- **UserBook**: (**id**, user_id, book_id)
+- **ReadInstance**: (**id**, user_book_id, status, format, start_date, end_date, drop_date, added_to_read_date)
+- **Goal**: (**id**, user_id, year, target_books)
