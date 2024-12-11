@@ -14,7 +14,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Set isolation level to RAUTOCOMMIT in SQLAlchemy engine options
+# Set isolation level to AUTOCOMMIT in SQLAlchemy engine options
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'isolation_level': 'AUTOCOMMIT'
 }
@@ -68,13 +68,13 @@ class ReadInstance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_book_id = db.Column(db.Integer, db.ForeignKey('user_books.id'), nullable=False)
 
-    status = db.Column(Enum('to read', 'in progress', 'completed', 'dropped'), nullable=False)
+    status = db.Column(Enum('to read', 'in progress', 'completed', 'dropped'), nullable=False, index=True)
     format = db.Column(Enum('paperback', 'hardcover', 'e-book', 'audiobook'), nullable=False)
 
-    start_date = db.Column(db.DateTime, nullable=True)
-    end_date = db.Column(db.DateTime, nullable=True)
-    drop_date = db.Column(db.DateTime, nullable=True)
-    added_to_read_date = db.Column(db.DateTime, nullable=True)
+    start_date = db.Column(db.DateTime, nullable=True, index=True)
+    end_date = db.Column(db.DateTime, nullable=True, index=True)
+    drop_date = db.Column(db.DateTime, nullable=True, index=True)
+    added_to_read_date = db.Column(db.DateTime, nullable=True, index=True)
 
 class Goal(db.Model):
     __tablename__ = 'goals'
